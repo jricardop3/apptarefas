@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
 
+
+
 class TarefaController extends Controller
 {
     public function __construct(){
@@ -72,7 +74,11 @@ class TarefaController extends Controller
      */
     public function edit(Tarefa $tarefa)
     {
-        //
+        $user_id = auth()->user()->id;
+        if ($tarefa->user_id === $user_id) {
+            return view('tarefa.edit', ['tarefa'=>$tarefa]);
+        }
+        return view('negado');
     }
 
     /**
@@ -84,7 +90,12 @@ class TarefaController extends Controller
      */
     public function update(Request $request, Tarefa $tarefa)
     {
-        //
+        $user_id = auth()->user()->id;
+        if ($tarefa->user_id === $user_id) {
+        $tarefa->update($request->all());
+        return redirect()->route('tarefa.show',['tarefa'=>$tarefa->id]);
+        }
+        return view('negado');
     }
 
     /**
@@ -95,6 +106,11 @@ class TarefaController extends Controller
      */
     public function destroy(Tarefa $tarefa)
     {
-        //
+        $user_id = auth()->user()->id;
+        if ($tarefa->user_id === $user_id) {
+        $tarefa->delete();
+        return redirect()->route('tarefa.index');
+        }
+        return view('negado');
     }
 }

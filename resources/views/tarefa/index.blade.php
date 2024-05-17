@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">App Tarefas</div>
+                <div class="card-header">App Tarefa <a class="float-right" href="{{route('tarefa.create')}}">Nova</a></div>
                 <div class="card-body">
                     
                     
@@ -16,15 +16,28 @@
                             <th scope="col">Tarefa</th>
                             <th scope="col">Usuario</th>
                             <th scope="col">Data limite</th>
+                            <th scope="col"></th>
+                            <th scope="col"></th>
                             
                           </tr>
                         </thead>
                         <tbody>
                             @foreach ($tarefas as $tarefa)
                           <tr>
-                            <th scope="row">{{$tarefa->tarefa}}</th>
+                            <td scope="row">{{$tarefa->tarefa}}</td>
                             <td>{{$tarefa->user_id}}</td>
                             <td>{{date('d/m/Y', strtotime($tarefa->data_conclusao))}}</td>
+                            <td>
+                              <a class="btn btn-primary" href="{{route('tarefa.edit',$tarefa->id)}}">Editar</a>
+                            </td>
+                            <td>
+
+                              <form action="{{route('tarefa.destroy',$tarefa->id)}}" method="post">
+                                @method('DELETE')
+                                @csrf
+                              <button type="submit" class="btn btn-primary">Deletar</button>
+                            </form>
+                            </td>
                             
                           </tr>
                           

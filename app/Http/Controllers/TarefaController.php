@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\TarefasExport;
 use App\Mail\NovaTarefaMail;
 use App\Models\Tarefa;
+use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -112,5 +114,8 @@ class TarefaController extends Controller
         return redirect()->route('tarefa.index');
         }
         return view('negado');
+    }
+    public function exportacao(){
+        return Excel::download(new TarefasExport, auth()->user()->name.'-tarefas.xlsx');
     }
 }

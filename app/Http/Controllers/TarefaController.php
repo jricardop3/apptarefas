@@ -8,6 +8,7 @@ use App\Models\Tarefa;
 use Excel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Barryvdh\DomPDF\Facade as PDF;
 
 
 
@@ -117,5 +118,13 @@ class TarefaController extends Controller
     }
     public function exportacao(){
         return Excel::download(new TarefasExport, auth()->user()->name.'-tarefas.xlsx');
+    }
+    public function exportar(){
+        $tarefas = auth()->user()->tarefas()->get();
+        $id = auth()->user()->id;
+        $pdf = PDF::loadView( 'tarefa.pdf', ['tarefas'=> $tarefas]);
+        $pdf->setPaper('a4','landscape')->setWarnings(false)->save('myfile.pdf'); //landscape horizontal vazio igual vertical
+        //return $pdf->download('lista.pdf');
+        return $pdf->stream('lista.pdf');
     }
 }

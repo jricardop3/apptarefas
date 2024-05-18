@@ -7,8 +7,9 @@
             <div class="card">
                 <div class="card-header">
                   <a class="float-left nav-link px-1" href="#">App Tarefa </a>
-                  <a class="float-right nav-link pe-1" href="{{route('tarefa.create')}}">Nova</a>
-                  <a class="float-right nav-link" href="{{route('tarefa.exportacao')}}">XLSX</a>
+                  <a class="float-right nav-link " href="{{route('tarefa.create')}}">Nova</a>
+                  <a class="float-right nav-link px-1" href="{{route('tarefa.exportacao')}}" target="_blank">XLSX</a>
+                  <a class="float-right nav-link" href="{{route('tarefa.exportar')}}" target="_blank">PDF</a>
                 </div>
                 <div class="card-body">
                     
